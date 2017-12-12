@@ -17,6 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+//Web
 Route::get('/blog', 'Web\PageController@blog')->name('blog');
+Route::get('entrada/{slug}', 'web\PageController@post')->name('post');
+Route::get('category/{slug}', 'web\PageController@category')->name('category');
+Route::get('etiqueta/{slug}', 'web\PageController@tag')->name('tag');
 
-Route::get('blog/{slug}', 'web\PageController@post')->name('post');
+//Admin
