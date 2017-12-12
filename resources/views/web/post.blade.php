@@ -3,12 +3,12 @@
 @section('content')
 	<div class="container">
 		<div class="col-md-8 col-md-offset-2">
-			<h1>Lista de Articulos</h1>
+			<h1>{{ $post->name }}</h1>
 
-			@foreach($posts as $post)
 				<div class="panel panel-defoult">
 					<div class="panel-heading">
-						{{ $post->name }}
+						Categoria:
+						<a href="#">{{ $post->category->name }}</a>
 					</div>
 					<div class="panel-body">
 						@if($post->file)
@@ -16,13 +16,16 @@
 						@endif
 
 						{{$post->excerpt}}
-						<a href="{{ route('post', $post->slug) }}" class="pull-right">Leer Mas</a>
+						
+						<hr>
+							{!! $post->body !!}
+						<hr>
+
+						@foreach($post->tags as $tag)
+							<a href="#">{{ $tag->name }}</a>
+						@endforeach
 					</div>
 				</div>
-			@endforeach
 		</div>
-			<div align="center">
-				{{ $posts->render() }}
-			</div>
 	</div>
 @endsection

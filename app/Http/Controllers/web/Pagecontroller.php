@@ -14,4 +14,10 @@ class Pagecontroller extends Controller
     	//dd($posts);
     	return view('web.posts', compact('posts'));
     }
+
+    public function post($slug){
+    	$post = Post::where('slug', $slug)->first();
+
+    	return view('web.post', compact('post'));
+    }
 }
