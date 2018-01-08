@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Tag;
+
 class TagController extends Controller
 {
     /**
@@ -12,9 +14,18 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+        $tags = Tag::orderBy('id', 'DESC')->paginate();
+
+        //dd($tags);
+        return view('admin.tags.index', compact('tags'));
     }
 
     /**
@@ -24,7 +35,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.tags.create');
     }
 
     /**
@@ -35,7 +46,10 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tag = Tag::create($request->all());
+
+        return redirect()->route('tags.edit', $tag->id)
+            ->with('info', 'Etiqueta Creada Correctamente');
     }
 
     /**
@@ -46,7 +60,9 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        //
+        $tag = Tag::find($id);
+
+        return view('admin.tags.show', compact('tag'));
     }
 
     /**
@@ -57,7 +73,9 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tag = Tag::find($id);
+
+        return view('admin.tags.edit', compact('tag'));
     }
 
     /**
@@ -69,7 +87,12 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $tag = Tag::find($id);
+
+        $tag->fill($request->all())->save();
+
+        return redirect()->route('tags.edit', $tag->id)
+            ->with('info', 'Etiqueta Actualizada Correctamente');
     }
 
     /**
@@ -80,6 +103,8 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tag = Tag::find($id)->delete();
+
+        return back()->with('info', 'Etiqueta '.$tag.' Eliminada Correctamente');
     }
 }
