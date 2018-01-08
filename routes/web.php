@@ -14,7 +14,6 @@
 Route::get('/', function () {
     return redirect()->route('blog');
 });
-
 Auth::routes();
 
 //Web
@@ -24,3 +23,6 @@ Route::get('category/{slug}', 'web\PageController@category')->name('category');
 Route::get('etiqueta/{slug}', 'web\PageController@tag')->name('tag');
 
 //Admin
+Route::resource('tags', 		'Admin\TagController');
+Route::resource('categories', 	'Admin\TCategoryController');
+Route::resource('posts', 		'Admin\PostController');
